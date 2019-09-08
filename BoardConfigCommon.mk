@@ -46,9 +46,7 @@ TARGET_KERNEL_SOURCE := kernel/oneplus/sm8150
 TARGET_KERNEL_CONFIG := vendor/sm8150-perf_defconfig
 
 # Platform
-BOARD_USES_QCOM_HARDWARE := true
 TARGET_BOARD_PLATFORM := msmnile
-QCOM_BOARD_PLATFORMS += msmnile
 
 # Properties
 TARGET_ODM_PROP += $(VENDOR_PATH)/odm.prop
