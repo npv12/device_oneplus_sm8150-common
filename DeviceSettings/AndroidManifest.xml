@@ -75,7 +75,9 @@
             android:theme="@style/AppTheme">
         </activity>
 
-        <receiver android:name="org.lineageos.device.DeviceSettings.Startup" >
+        <receiver 
+            android:name="org.lineageos.device.DeviceSettings.Startup" 
+            android:enabled="true">
             <intent-filter android:priority="100" >
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
