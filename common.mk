@@ -534,3 +534,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_BOOT_JARS += \
     WfdCommon
+
+# Blur
+PRODUCT_PROPERTY_OVERRIDES += persist.sys.sf.disable_blurs=0
