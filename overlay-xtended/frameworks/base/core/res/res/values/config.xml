@@ -73,8 +73,22 @@
     <!-- Does the device have a notification/battery LED? -->
     <bool name="config_deviceHasLED">false</bool>
 
+    <!-- Does the device have a notification led -->
+    <bool name="config_hasNotificationLed">false</bool>
+     
+    <!-- Is the battery LED intrusive? Used to decide if there should be a disable option -->
+    <bool name="config_intrusiveBatteryLed">false</bool>
+
+      <!-- Does the battery LED support multiple colors?
+         Used to decide if the user can change the colors -->
+    <bool name="config_multiColorBatteryLed">false</bool>
+
+      <!-- Do the battery/notification LEDs support pulsing?
+         Used to decide if we show pulse settings -->
+    <bool name="config_ledCanPulse">false</bool>
+    
     <!-- Whether device has dash charging support -->
-    <bool name="config_hasDashCharger">true</bool>
+    <bool name="config_hasWCharger">true</bool>
 
     <!-- Type of the pickup sensor used when config_dozePulsePickup is enabled. -->
     <string name="config_dozePickupSensorType" translatable="false">oneplus.sensor.op_motion_detect</string>
