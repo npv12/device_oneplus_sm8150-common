@@ -31,8 +31,8 @@
 
     <!-- Names of the key handler classes -->
     <string-array name="config_deviceKeyHandlerClasses" translatable="false">
-        <item>com.yaap.device.DeviceSettings.KeyHandler</item>
-        <item>com.yaap.device.DeviceSettings.TouchKeyHandler</item>
+        <item>org.lineageos.device.DeviceSettings.KeyHandler</item>
+        <item>org.lineageos.device.DeviceSettings.TouchKeyHandler</item>
         <item>org.lineageos.camerahelper.KeyHandler</item>
     </string-array>
 

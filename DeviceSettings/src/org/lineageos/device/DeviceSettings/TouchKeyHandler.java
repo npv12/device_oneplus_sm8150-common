@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.yaap.device.DeviceSettings;
+package org.lineageos.device.DeviceSettings;
 
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
@@ -81,10 +81,8 @@ public class TouchKeyHandler implements DeviceKeyHandler {
     private final BroadcastReceiver mUpdateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int[] keycodes = intent.getIntArrayExtra(
-                    Constants.UPDATE_EXTRA_KEYCODE_MAPPING);
-            int[] actions = intent.getIntArrayExtra(
-                    Constants.UPDATE_EXTRA_ACTION_MAPPING);
+            int[] keycodes = intent.getIntArrayExtra(Constants.UPDATE_EXTRA_KEYCODE_MAPPING);
+            int[] actions = intent.getIntArrayExtra(Constants.UPDATE_EXTRA_ACTION_MAPPING);
             mActionMapping.clear();
             if (keycodes != null && actions != null && keycodes.length == actions.length) {
                 for (int i = 0; i < keycodes.length; i++) {
@@ -100,8 +98,7 @@ public class TouchKeyHandler implements DeviceKeyHandler {
         mAudioManager = mContext.getSystemService(AudioManager.class);
 
         mPowerManager = context.getSystemService(PowerManager.class);
-        mGestureWakeLock = mPowerManager.newWakeLock(
-                PowerManager.PARTIAL_WAKE_LOCK, "TouchscreenGestureWakeLock");
+        mGestureWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "TouchscreenGestureWakeLock");
 
         mEventHandler = new EventHandler();
 
@@ -113,23 +110,24 @@ public class TouchKeyHandler implements DeviceKeyHandler {
         if (mProximitySensor != null) {
             mSensorManager = context.getSystemService(SensorManager.class);
             mProximitySensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
-            mProximityWakeLock = mPowerManager.newWakeLock(
-                    PowerManager.PARTIAL_WAKE_LOCK, "TouchscreenGestureProximityWakeLock");
+            mProximityWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                    "TouchscreenGestureProximityWakeLock");
         }
-        mContext.registerReceiver(mUpdateReceiver,
-                new IntentFilter(Constants.UPDATE_PREFS_ACTION));
+        mContext.registerReceiver(mUpdateReceiver, new IntentFilter(Constants.UPDATE_PREFS_ACTION));
     }
 
     private class TorchModeCallback extends CameraManager.TorchCallback {
         @Override
         public void onTorchModeChanged(String cameraId, boolean enabled) {
-            if (!cameraId.equals(mRearCameraId)) return;
+            if (!cameraId.equals(mRearCameraId))
+                return;
             mTorchEnabled = enabled;
         }
 
         @Override
         public void onTorchModeUnavailable(String cameraId) {
-            if (!cameraId.equals(mRearCameraId)) return;
+            if (!cameraId.equals(mRearCameraId))
+                return;
             mTorchEnabled = false;
         }
     }
@@ -156,8 +154,7 @@ public class TouchKeyHandler implements DeviceKeyHandler {
     }
 
     private boolean hasSetupCompleted() {
-        return Settings.Secure.getInt(mContext.getContentResolver(),
-                Settings.Secure.USER_SETUP_COMPLETE, 0) != 0;
+        return Settings.Secure.getInt(mContext.getContentResolver(), Settings.Secure.USER_SETUP_COMPLETE, 0) != 0;
     }
 
     private void processEvent(final int action) {
@@ -239,16 +236,14 @@ public class TouchKeyHandler implements DeviceKeyHandler {
     private void launchCamera() {
         mGestureWakeLock.acquire(GESTURE_WAKELOCK_DURATION);
         final Intent intent = new Intent(android.content.Intent.ACTION_SCREEN_CAMERA_GESTURE);
-        mContext.sendBroadcastAsUser(intent, UserHandle.CURRENT,
-                Manifest.permission.STATUS_BAR_SERVICE);
+        mContext.sendBroadcastAsUser(intent, UserHandle.CURRENT, Manifest.permission.STATUS_BAR_SERVICE);
         doHapticFeedback();
     }
 
     private void launchBrowser() {
         mGestureWakeLock.acquire(GESTURE_WAKELOCK_DURATION);
         mPowerManager.wakeUp(SystemClock.uptimeMillis(), GESTURE_WAKEUP_REASON);
-        final Intent intent = getLaunchableIntent(
-                new Intent(Intent.ACTION_VIEW, Uri.parse("http:")));
+        final Intent intent = getLaunchableIntent(new Intent(Intent.ACTION_VIEW, Uri.parse("http:")));
         startActivitySafely(intent);
         doHapticFeedback();
     }
@@ -264,8 +259,7 @@ public class TouchKeyHandler implements DeviceKeyHandler {
     private void launchEmail() {
         mGestureWakeLock.acquire(GESTURE_WAKELOCK_DURATION);
         mPowerManager.wakeUp(SystemClock.uptimeMillis(), GESTURE_WAKEUP_REASON);
-        final Intent intent = getLaunchableIntent(
-                new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:")));
+        final Intent intent = getLaunchableIntent(new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:")));
         startActivitySafely(intent);
         doHapticFeedback();
     }
@@ -273,8 +267,7 @@ public class TouchKeyHandler implements DeviceKeyHandler {
     private void launchMessages() {
         mGestureWakeLock.acquire(GESTURE_WAKELOCK_DURATION);
         mPowerManager.wakeUp(SystemClock.uptimeMillis(), GESTURE_WAKEUP_REASON);
-        final Intent intent = getLaunchableIntent(
-                new Intent(Intent.ACTION_VIEW, Uri.parse("sms:")));
+        final Intent intent = getLaunchableIntent(new Intent(Intent.ACTION_VIEW, Uri.parse("sms:")));
         startActivitySafely(intent);
         doHapticFeedback();
     }
@@ -321,8 +314,8 @@ public class TouchKeyHandler implements DeviceKeyHandler {
     }
 
     private void launchDozePulse() {
-        final boolean dozeEnabled = Settings.Secure.getInt(mContext.getContentResolver(),
-                Settings.Secure.DOZE_ENABLED, 1) != 0;
+        final boolean dozeEnabled = Settings.Secure.getInt(mContext.getContentResolver(), Settings.Secure.DOZE_ENABLED,
+                1) != 0;
         if (dozeEnabled) {
             mGestureWakeLock.acquire(GESTURE_WAKELOCK_DURATION);
             final Intent intent = new Intent(PULSE_ACTION);
@@ -337,8 +330,8 @@ public class TouchKeyHandler implements DeviceKeyHandler {
             Log.w(TAG, "Unable to send media key event");
             return;
         }
-        KeyEvent event = new KeyEvent(SystemClock.uptimeMillis(),
-                SystemClock.uptimeMillis(), KeyEvent.ACTION_DOWN, keycode, 0);
+        KeyEvent event = new KeyEvent(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), KeyEvent.ACTION_DOWN,
+                keycode, 0);
         helper.sendMediaButtonEvent(event, true);
         event = KeyEvent.changeAction(event, KeyEvent.ACTION_UP);
         helper.sendMediaButtonEvent(event, true);
@@ -349,9 +342,8 @@ public class TouchKeyHandler implements DeviceKeyHandler {
             Log.w(TAG, "No intent passed to startActivitySafely");
             return;
         }
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                | Intent.FLAG_ACTIVITY_SINGLE_TOP
-                | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(
+                Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         try {
             final UserHandle user = new UserHandle(UserHandle.USER_CURRENT);
             mContext.startActivityAsUser(intent, null, user);
@@ -378,8 +370,7 @@ public class TouchKeyHandler implements DeviceKeyHandler {
         if (mRearCameraId == null) {
             try {
                 for (final String cameraId : mCameraManager.getCameraIdList()) {
-                    final CameraCharacteristics characteristics =
-                            mCameraManager.getCameraCharacteristics(cameraId);
+                    final CameraCharacteristics characteristics = mCameraManager.getCameraCharacteristics(cameraId);
                     final int orientation = characteristics.get(CameraCharacteristics.LENS_FACING);
                     if (orientation == CameraCharacteristics.LENS_FACING_BACK) {
                         mRearCameraId = cameraId;

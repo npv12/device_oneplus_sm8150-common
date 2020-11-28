@@ -15,7 +15,7 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 */
-package com.yaap.device.DeviceSettings;
+package org.lineageos.device.DeviceSettings;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -46,10 +46,9 @@ import androidx.preference.PreferenceScreen;
 import androidx.preference.TwoStatePreference;
 
 import com.android.internal.util.xtended.FileUtils;
-import com.yaap.device.DeviceSettings.Constants;
+import org.lineageos.device.DeviceSettings.Constants;
 
-public class DeviceSettings extends PreferenceFragment
-        implements Preference.OnPreferenceChangeListener {
+public class DeviceSettings extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
 
     private static final String KEY_CATEGORY_CAMERA = "camera";
     private static final String KEY_CATEGORY_GRAPHICS = "graphics";
@@ -69,10 +68,8 @@ public class DeviceSettings extends PreferenceFragment
 
     public static final String KEY_SETTINGS_PREFIX = "device_setting_";
 
-    private static final boolean sHasPopupCamera =
-            Build.DEVICE.equals("OnePlus7Pro") ||
-            Build.DEVICE.equals("OnePlus7TPro") ||
-            Build.DEVICE.equals("OnePlus7TProNR");
+    private static final boolean sHasPopupCamera = Build.DEVICE.equals("OnePlus7Pro")
+            || Build.DEVICE.equals("OnePlus7TPro") || Build.DEVICE.equals("OnePlus7TProNR");
 
     private static TwoStatePreference mHBMModeSwitch;
     private static TwoStatePreference mDCModeSwitch;
@@ -138,7 +135,7 @@ public class DeviceSettings extends PreferenceFragment
         if (sHasPopupCamera) {
             mAlwaysCameraSwitch = (SwitchPreference) findPreference(KEY_ALWAYS_CAMERA_DIALOG);
             boolean enabled = Settings.System.getInt(getContext().getContentResolver(),
-                        KEY_SETTINGS_PREFIX + KEY_ALWAYS_CAMERA_DIALOG, 0) == 1;
+                    KEY_SETTINGS_PREFIX + KEY_ALWAYS_CAMERA_DIALOG, 0) == 1;
             mAlwaysCameraSwitch.setChecked(enabled);
             mAlwaysCameraSwitch.setOnPreferenceChangeListener(this);
         } else {
@@ -149,7 +146,7 @@ public class DeviceSettings extends PreferenceFragment
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
         if (preference == mAutoRefreshRate) {
-              mRefreshRate.setEnabled(!AutoRefreshRateSwitch.isCurrentlyEnabled(this.getContext()));
+            mRefreshRate.setEnabled(!AutoRefreshRateSwitch.isCurrentlyEnabled(this.getContext()));
         }
         return super.onPreferenceTreeClick(preference);
     }
@@ -158,7 +155,7 @@ public class DeviceSettings extends PreferenceFragment
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mFpsInfo) {
             boolean enabled = (Boolean) newValue;
-            Intent fpsinfo = new Intent(this.getContext(), com.yaap.device.DeviceSettings.FPSInfoService.class);
+            Intent fpsinfo = new Intent(this.getContext(), org.lineageos.device.DeviceSettings.FPSInfoService.class);
             if (enabled) {
                 this.getContext().startService(fpsinfo);
             } else {
@@ -166,9 +163,8 @@ public class DeviceSettings extends PreferenceFragment
             }
         } else if (preference == mAlwaysCameraSwitch) {
             boolean enabled = (Boolean) newValue;
-            Settings.System.putInt(getContext().getContentResolver(),
-                        KEY_SETTINGS_PREFIX + KEY_ALWAYS_CAMERA_DIALOG,
-                        enabled ? 1 : 0);
+            Settings.System.putInt(getContext().getContentResolver(), KEY_SETTINGS_PREFIX + KEY_ALWAYS_CAMERA_DIALOG,
+                    enabled ? 1 : 0);
         } else {
             Constants.setPreferenceInt(getContext(), preference.getKey(), Integer.parseInt((String) newValue));
         }
@@ -178,10 +174,10 @@ public class DeviceSettings extends PreferenceFragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        // Respond to the action bar's Up/Home button
-        case android.R.id.home:
-            getActivity().finish();
-            return true;
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                getActivity().finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

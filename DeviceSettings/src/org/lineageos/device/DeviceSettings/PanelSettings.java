@@ -15,7 +15,7 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 */
-package com.yaap.device.DeviceSettings;
+package org.lineageos.device.DeviceSettings;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -78,11 +78,10 @@ public class PanelSettings extends PreferenceFragment implements RadioGroup.OnCh
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-	final View rootView = inflater.inflate(R.layout.panel_modes, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View rootView = inflater.inflate(R.layout.panel_modes, container, false);
 
-	viewPager = (ViewPager) rootView.findViewById(R.id.viewPager);
+        viewPager = (ViewPager) rootView.findViewById(R.id.viewPager);
         sliderDotspanel = (LinearLayout) rootView.findViewById(R.id.SliderDots);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity());
         viewPager.setAdapter(viewPagerAdapter);
@@ -90,15 +89,18 @@ public class PanelSettings extends PreferenceFragment implements RadioGroup.OnCh
         dotscount = viewPagerAdapter.getCount();
         dots = new ImageView[dotscount];
 
-        for(int i = 0; i < dotscount; i++){
+        for (int i = 0; i < dotscount; i++) {
             dots[i] = new ImageView(getActivity());
-            dots[i].setImageDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.inactive_dot));
+            dots[i].setImageDrawable(
+                    ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.inactive_dot));
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
             params.setMargins(8, 0, 8, 0);
             sliderDotspanel.addView(dots[i], params);
         }
-        dots[0].setImageDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.active_dot));
+        dots[0].setImageDrawable(
+                ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.active_dot));
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -109,17 +111,19 @@ public class PanelSettings extends PreferenceFragment implements RadioGroup.OnCh
             @Override
             public void onPageSelected(int position) {
 
-                for(int i = 0; i< dotscount; i++){
-                    dots[i].setImageDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.inactive_dot));
+                for (int i = 0; i < dotscount; i++) {
+                    dots[i].setImageDrawable(
+                            ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.inactive_dot));
                 }
-                dots[position].setImageDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.active_dot));
+                dots[position].setImageDrawable(
+                        ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.active_dot));
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
             }
         });
-	return rootView;
+        return rootView;
     }
 
     @Override

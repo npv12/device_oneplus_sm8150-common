@@ -15,7 +15,7 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 */
-package com.yaap.device.DeviceSettings;
+package org.lineageos.device.DeviceSettings;
 
 import android.content.res.Resources;
 import android.util.Log;
@@ -33,8 +33,9 @@ public class Utils {
 
     /**
      * Write a string value to the specified file.
-     * @param filename      The filename
-     * @param value         The value
+     * 
+     * @param filename The filename
+     * @param value    The value
      */
     public static void writeValue(String filename, String value) {
         if (filename == null) {
@@ -54,8 +55,9 @@ public class Utils {
 
     /**
      * Check if the specified file exists.
-     * @param filename      The filename
-     * @return              Whether the file exists or not
+     * 
+     * @param filename The filename
+     * @return Whether the file exists or not
      */
     public static boolean fileExists(String filename) {
         if (filename == null) {
@@ -93,32 +95,29 @@ public class Utils {
 
     public static boolean getFileValueAsBoolean(String filename, boolean defValue) {
         String fileValue = readLine(filename);
-        if(fileValue!=null){
-            return (fileValue.equals("0")?false:true);
+        if (fileValue != null) {
+            return (fileValue.equals("0") ? false : true);
         }
         return defValue;
     }
 
     public static String getFileValue(String filename, String defValue) {
         String fileValue = readLine(filename);
-        if(fileValue!=null){
+        if (fileValue != null) {
             return fileValue;
         }
         return defValue;
     }
 
-    public static String getLocalizedString(final Resources res,
-                                            final String stringName,
-                                            final String stringFormat) {
+    public static String getLocalizedString(final Resources res, final String stringName, final String stringFormat) {
         final String name = stringName.toLowerCase().replace(" ", "_");
         final String nameRes = String.format(stringFormat, name);
         return getStringForResourceName(res, nameRes, stringName);
     }
 
-    public static String getStringForResourceName(final Resources res,
-                                                  final String resourceName,
-                                                  final String defaultValue) {
-        final int resId = res.getIdentifier(resourceName, "string", "com.yaap.device.DeviceSettings");
+    public static String getStringForResourceName(final Resources res, final String resourceName,
+            final String defaultValue) {
+        final int resId = res.getIdentifier(resourceName, "string", "org.lineageos.device.DeviceSettings");
         if (resId <= 0) {
             Log.e(TAG, "No resource found for " + resourceName);
             return defaultValue;

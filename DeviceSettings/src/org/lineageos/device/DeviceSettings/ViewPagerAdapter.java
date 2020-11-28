@@ -15,7 +15,7 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 */
-package com.yaap.device.DeviceSettings;
+package org.lineageos.device.DeviceSettings;
 
 import android.content.Context;
 import androidx.viewpager.widget.PagerAdapter;
@@ -29,7 +29,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     private Context context;
     private LayoutInflater layoutInflater;
-    private Integer [] images = {R.drawable.image1,R.drawable.image2,R.drawable.image3};
+    private Integer[] images = { R.drawable.image1, R.drawable.image2, R.drawable.image3 };
 
     public ViewPagerAdapter(Context context) {
         this.context = context;

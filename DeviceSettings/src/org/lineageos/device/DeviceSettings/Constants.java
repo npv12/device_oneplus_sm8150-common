@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.yaap.device.DeviceSettings;
+package org.lineageos.device.DeviceSettings;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +32,7 @@ import android.media.AudioManager;
 public class Constants {
 
     // Broadcast action for settings update
-    static final String UPDATE_PREFS_ACTION = "com.yaap.device.DeviceSettings.UPDATE_SETTINGS";
+    static final String UPDATE_PREFS_ACTION = "org.lineageos.device.DeviceSettings.UPDATE_SETTINGS";
 
     // Preference keys
     public static final String NOTIF_SLIDER_TOP_KEY = "keycode_top_position";
@@ -89,12 +89,12 @@ public class Constants {
     }
 
     public static int getPreferenceInt(Context context, String key) {
-        return Settings.System.getIntForUser(context.getContentResolver(),
-                sStringKeyPreferenceMap.get(key), sKeyDefaultMap.get(key), UserHandle.USER_CURRENT);
+        return Settings.System.getIntForUser(context.getContentResolver(), sStringKeyPreferenceMap.get(key),
+                sKeyDefaultMap.get(key), UserHandle.USER_CURRENT);
     }
 
     public static void setPreferenceInt(Context context, String key, int value) {
-        Settings.System.putIntForUser(context.getContentResolver(),
-                sStringKeyPreferenceMap.get(key), value, UserHandle.USER_CURRENT);
+        Settings.System.putIntForUser(context.getContentResolver(), sStringKeyPreferenceMap.get(key), value,
+                UserHandle.USER_CURRENT);
     }
 }

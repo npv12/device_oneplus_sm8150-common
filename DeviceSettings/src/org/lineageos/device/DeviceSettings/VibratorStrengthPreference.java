@@ -15,7 +15,7 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 */
-package com.yaap.device.DeviceSettings;
+package org.lineageos.device.DeviceSettings;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -33,8 +33,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceViewHolder;
 
-public class VibratorStrengthPreference extends Preference implements
-        SeekBar.OnSeekBarChangeListener {
+public class VibratorStrengthPreference extends Preference implements SeekBar.OnSeekBarChangeListener {
 
     private SeekBar mSeekBar;
     private int mOldStrength;
@@ -43,15 +42,15 @@ public class VibratorStrengthPreference extends Preference implements
     private Vibrator mVibrator;
 
     private static final String FILE_LEVEL = "/sys/devices/platform/soc/89c000.i2c/i2c-2/2-005a/leds/vibrator/level";
-    private static final long testVibrationPattern[] = {0,250};
+    private static final long testVibrationPattern[] = { 0, 250 };
     public static final String SETTINGS_KEY = DeviceSettings.KEY_SETTINGS_PREFIX + DeviceSettings.KEY_VIBSTRENGTH;
     public static final String DEFAULT = "3";
 
     public VibratorStrengthPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         // from drivers/platform/msm/qpnp-haptic.c
-        // #define QPNP_HAP_VMAX_MIN_MV		116
-        // #define QPNP_HAP_VMAX_MAX_MV		3596
+        // #define QPNP_HAP_VMAX_MIN_MV 116
+        // #define QPNP_HAP_VMAX_MAX_MV 3596
         mMinValue = 0;
         mMaxValue = 10;
 
@@ -74,18 +73,18 @@ public class VibratorStrengthPreference extends Preference implements
         return Utils.fileWritable(FILE_LEVEL);
     }
 
-	public static String getValue(Context context) {
+    public static String getValue(Context context) {
         String val = Utils.getFileValue(FILE_LEVEL, DEFAULT);
         return val;
-	}
+    }
 
-	private void setValue(String newValue, boolean withFeedback) {
-	    Utils.writeValue(FILE_LEVEL, newValue);
+    private void setValue(String newValue, boolean withFeedback) {
+        Utils.writeValue(FILE_LEVEL, newValue);
         Settings.System.putString(getContext().getContentResolver(), SETTINGS_KEY, newValue);
         if (withFeedback) {
             mVibrator.vibrate(testVibrationPattern, -1);
         }
-	}
+    }
 
     public static void restore(Context context) {
         if (!isSupported()) {
@@ -99,8 +98,7 @@ public class VibratorStrengthPreference extends Preference implements
         Utils.writeValue(FILE_LEVEL, storedValue);
     }
 
-    public void onProgressChanged(SeekBar seekBar, int progress,
-            boolean fromTouch) {
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
         setValue(String.valueOf(progress + mMinValue), true);
     }
 
