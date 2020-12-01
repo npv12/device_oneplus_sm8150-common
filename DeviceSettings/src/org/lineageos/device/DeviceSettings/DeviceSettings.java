@@ -127,14 +127,15 @@ public class DeviceSettings extends PreferenceFragment implements Preference.OnP
         mHBMModeSwitch.setOnPreferenceChangeListener(new HBMModeSwitch());
 
         if (getResources().getBoolean(R.bool.config_deviceHasHighRefreshRate)) {
+            boolean autoRefresh = AutoRefreshRateSwitch.isCurrentlyEnabled(this.getContext());
             mAutoRefreshRate = (SwitchPreference) findPreference(KEY_AUTO_REFRESH_RATE);
-            mAutoRefreshRate.setChecked(AutoRefreshRateSwitch.isCurrentlyEnabled(this.getContext()));
-            mAutoRefreshRate.setOnPreferenceChangeListener(new AutoRefreshRateSwitch(getContext()));
+            mAutoRefreshRate.setChecked(autoRefresh);
+            mAutoRefreshRate.setOnPreferenceChangeListener(this);
 
             mRefreshRate = (TwoStatePreference) findPreference(KEY_REFRESH_RATE);
-            mRefreshRate.setEnabled(!AutoRefreshRateSwitch.isCurrentlyEnabled(this.getContext()));
             mRefreshRate.setChecked(RefreshRateSwitch.isCurrentlyEnabled(this.getContext()));
-            mRefreshRate.setOnPreferenceChangeListener(new RefreshRateSwitch(getContext()));
+            mRefreshRate.setOnPreferenceChangeListener(this);
+            updateRefreshRateState(autoRefresh);
 
             mFpsInfo = (SwitchPreference) findPreference(KEY_FPS_INFO);
             mFpsInfo.setChecked(prefs.getBoolean(KEY_FPS_INFO, false));
@@ -212,8 +213,21 @@ public class DeviceSettings extends PreferenceFragment implements Preference.OnP
                 this.getContext().getPackageManager().setComponentEnabledSetting(name,
                         PackageManager.COMPONENT_ENABLED_STATE_DISABLED, 0);
             }
+        } else if (preference == mAutoRefreshRate) {
+            Boolean enabled = (Boolean) newValue;
+            Settings.System.putFloat(getContext().getContentResolver(),
+                    Settings.System.PEAK_REFRESH_RATE, 90f);
+            Settings.System.putFloat(getContext().getContentResolver(),
+                    Settings.System.MIN_REFRESH_RATE, 60f);
+            Settings.System.putInt(getContext().getContentResolver(),
+                    AutoRefreshRateSwitch.SETTINGS_KEY, enabled ? 1 : 0);
+            updateRefreshRateState(enabled);
+        } else if (preference == mRefreshRate) {
+            Boolean enabled = (Boolean) newValue;
+            RefreshRateSwitch.setPeakRefresh(getContext(), enabled);
         } else {
-            Constants.setPreferenceInt(getContext(), preference.getKey(), Integer.parseInt((String) newValue));
+            Constants.setPreferenceInt(getContext(), preference.getKey(),
+                    Integer.parseInt((String) newValue));
         }
         return true;
     }
@@ -266,5 +280,10 @@ public class DeviceSettings extends PreferenceFragment implements Preference.OnP
                 setSelinuxEnabled(SELinux.isSELinuxEnforced(), mSelinuxPersistence.isChecked());
             }
         }
+    }
+    
+    private void updateRefreshRateState(boolean auto) {
+        mRefreshRate.setEnabled(!auto);
+        if (auto) mRefreshRate.setChecked(false);
     }
 }
