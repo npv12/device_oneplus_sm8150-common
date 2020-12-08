@@ -37,4 +37,7 @@
     <!-- NightLight FOD -->
     <bool name="disable_fod_night_light">true</bool>
     
+    <!-- Hide FOD while Going to sleep from lockscreen to avoid HBM flicker -->
+    <bool name="config_inDisplayFingerprintFlickersGoingToSleep">true</bool>
+    
 </resources>
