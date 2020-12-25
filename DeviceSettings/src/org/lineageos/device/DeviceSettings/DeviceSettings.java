@@ -84,7 +84,6 @@ public class DeviceSettings extends PreferenceFragment implements Preference.OnP
     private static TwoStatePreference mHBMModeSwitch;
     private static TwoStatePreference mDCModeSwitch;
     private static TwoStatePreference mRefreshRate;
-    private static SwitchPreference mAutoRefreshRate;
     private static SwitchPreference mFpsInfo;
     private ListPreference mTopKeyPref;
     private ListPreference mMiddleKeyPref;
@@ -127,15 +126,10 @@ public class DeviceSettings extends PreferenceFragment implements Preference.OnP
         mHBMModeSwitch.setOnPreferenceChangeListener(new HBMModeSwitch());
 
         if (getResources().getBoolean(R.bool.config_deviceHasHighRefreshRate)) {
-            boolean autoRefresh = AutoRefreshRateSwitch.isCurrentlyEnabled(this.getContext());
-            mAutoRefreshRate = (SwitchPreference) findPreference(KEY_AUTO_REFRESH_RATE);
-            mAutoRefreshRate.setChecked(autoRefresh);
-            mAutoRefreshRate.setOnPreferenceChangeListener(this);
 
             mRefreshRate = (TwoStatePreference) findPreference(KEY_REFRESH_RATE);
             mRefreshRate.setChecked(RefreshRateSwitch.isCurrentlyEnabled(this.getContext()));
             mRefreshRate.setOnPreferenceChangeListener(this);
-            updateRefreshRateState(autoRefresh);
 
             mFpsInfo = (SwitchPreference) findPreference(KEY_FPS_INFO);
             mFpsInfo.setChecked(prefs.getBoolean(KEY_FPS_INFO, false));
@@ -171,9 +165,6 @@ public class DeviceSettings extends PreferenceFragment implements Preference.OnP
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
-        if (preference == mAutoRefreshRate) {
-            mRefreshRate.setEnabled(!AutoRefreshRateSwitch.isCurrentlyEnabled(this.getContext()));
-        }
         return super.onPreferenceTreeClick(preference);
     }
 
@@ -197,31 +188,6 @@ public class DeviceSettings extends PreferenceFragment implements Preference.OnP
             setSelinuxEnabled(enabled, mSelinuxPersistence.isChecked());
         } else if (preference == mSelinuxPersistence) {
             setSelinuxEnabled(mSelinuxMode.isChecked(), (Boolean) newValue);
-        } else if (preference == mEnableDolbyAtmos) {
-            boolean enabled = (Boolean) newValue;
-            Intent daxService = new Intent();
-            ComponentName name = new ComponentName("com.dolby.daxservice", "com.dolby.daxservice.DaxService");
-            daxService.setComponent(name);
-            if (enabled) {
-                // enable service component and start service
-                this.getContext().getPackageManager().setComponentEnabledSetting(name,
-                        PackageManager.COMPONENT_ENABLED_STATE_DEFAULT, 0);
-                this.getContext().startService(daxService);
-            } else {
-                // disable service component and stop service
-                this.getContext().stopService(daxService);
-                this.getContext().getPackageManager().setComponentEnabledSetting(name,
-                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED, 0);
-            }
-        } else if (preference == mAutoRefreshRate) {
-            Boolean enabled = (Boolean) newValue;
-            Settings.System.putFloat(getContext().getContentResolver(),
-                    Settings.System.PEAK_REFRESH_RATE, 90f);
-            Settings.System.putFloat(getContext().getContentResolver(),
-                    Settings.System.MIN_REFRESH_RATE, 60f);
-            Settings.System.putInt(getContext().getContentResolver(),
-                    AutoRefreshRateSwitch.SETTINGS_KEY, enabled ? 1 : 0);
-            updateRefreshRateState(enabled);
         } else if (preference == mRefreshRate) {
             Boolean enabled = (Boolean) newValue;
             RefreshRateSwitch.setPeakRefresh(getContext(), enabled);
@@ -280,10 +246,5 @@ public class DeviceSettings extends PreferenceFragment implements Preference.OnP
                 setSelinuxEnabled(SELinux.isSELinuxEnforced(), mSelinuxPersistence.isChecked());
             }
         }
-    }
-    
-    private void updateRefreshRateState(boolean auto) {
-        mRefreshRate.setEnabled(!auto);
-        if (auto) mRefreshRate.setChecked(false);
     }
 }

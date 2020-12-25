@@ -52,16 +52,10 @@
         android:title="@string/refresh_title">
 
         <SwitchPreference
-            android:key="auto_refresh_rate"
-            android:summary="@string/auto_refresh_rate_summary"
-            android:title="@string/auto_refresh_rate_title"
-            android:persistent="true" />
-
-        <SwitchPreference
             android:key="refresh_rate"
             android:summary="@string/refresh_rate_summary"
             android:title="@string/refresh_rate_title"
-            android:persistent="false" />
+            android:persistent="true" />
 
         <Preference
             android:icon="@drawable/ic_info_outline_24dp"

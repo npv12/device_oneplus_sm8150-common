@@ -29,7 +29,6 @@ import androidx.preference.PreferenceManager;
 @TargetApi(24)
 public class RefreshRateTileService extends TileService {
     private boolean enabled = false;
-    private boolean autoRefreshEnabled;
 
     @Override
     public void onDestroy() {
@@ -49,18 +48,12 @@ public class RefreshRateTileService extends TileService {
     @Override
     public void onStartListening() {
         super.onStartListening();
-        autoRefreshEnabled = Settings.System.getInt(this.getContentResolver(), AutoRefreshRateSwitch.SETTINGS_KEY,
-                1) == 1;
-        if (autoRefreshEnabled) {
-            getQsTile().setState(Tile.STATE_UNAVAILABLE);
-        } else {
-            enabled = RefreshRateSwitch.isCurrentlyEnabled(this);
-            RefreshRateSwitch.setPeakRefresh(this, enabled);
+        enabled = RefreshRateSwitch.isCurrentlyEnabled(this);
+        RefreshRateSwitch.setPeakRefresh(this, enabled);
 
-            getQsTile().setIcon(Icon.createWithResource(this,
-                    enabled ? R.drawable.ic_refresh_tile_90 : R.drawable.ic_refresh_tile_60));
-            getQsTile().setState(enabled ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE);
-        }
+        getQsTile().setIcon(Icon.createWithResource(this,
+                enabled ? R.drawable.ic_refresh_tile_90 : R.drawable.ic_refresh_tile_60));
+        getQsTile().setState(enabled ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE);
         getQsTile().updateTile();
     }
 
@@ -72,17 +65,15 @@ public class RefreshRateTileService extends TileService {
     @Override
     public void onClick() {
         super.onClick();
-        if (!autoRefreshEnabled) {
-            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-            enabled = RefreshRateSwitch.isCurrentlyEnabled(this);
-            RefreshRateSwitch.setPeakRefresh(this, enabled);
-            sharedPrefs.edit().putBoolean(DeviceSettings.KEY_REFRESH_RATE, enabled ? false : true).commit();
-            Settings.System.putFloat(this.getContentResolver(), Settings.System.PEAK_REFRESH_RATE, enabled ? 60f : 90f);
-            Settings.System.putFloat(this.getContentResolver(), Settings.System.MIN_REFRESH_RATE, enabled ? 60f : 90f);
-            getQsTile().setIcon(Icon.createWithResource(this,
-                    enabled ? R.drawable.ic_refresh_tile_60 : R.drawable.ic_refresh_tile_90));
-            getQsTile().setState(enabled ? Tile.STATE_INACTIVE : Tile.STATE_ACTIVE);
-            getQsTile().updateTile();
-        }
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        enabled = RefreshRateSwitch.isCurrentlyEnabled(this);
+        RefreshRateSwitch.setPeakRefresh(this, enabled);
+        sharedPrefs.edit().putBoolean(DeviceSettings.KEY_REFRESH_RATE, enabled ? false : true).commit();
+        Settings.System.putFloat(this.getContentResolver(), Settings.System.PEAK_REFRESH_RATE, enabled ? 60f : 90f);
+        Settings.System.putFloat(this.getContentResolver(), Settings.System.MIN_REFRESH_RATE, enabled ? 60f : 90f);
+        getQsTile().setIcon(Icon.createWithResource(this,
+                enabled ? R.drawable.ic_refresh_tile_60 : R.drawable.ic_refresh_tile_90));
+        getQsTile().setState(enabled ? Tile.STATE_INACTIVE : Tile.STATE_ACTIVE);
+        getQsTile().updateTile();
     }
 }
