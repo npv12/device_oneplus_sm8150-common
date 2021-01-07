@@ -252,6 +252,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     OnePlusDoze
 
+# Doze privapp permission
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/privapp-permissions-doze.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-doze.xml
+
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl \
@@ -482,6 +486,10 @@ PRODUCT_PACKAGES += \
 # tri-state key
 PRODUCT_PACKAGES += \
     tri-state-key_daemon
+
+# Turbo privapp permission
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/privapp-permissions-turbo.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-turbo.xml
 
 # Update engine
 PRODUCT_PACKAGES += \
