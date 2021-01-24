@@ -269,10 +269,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/privapp-permissions-doze.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-doze.xml
 
 # DRM
-PRODUCT_PACKAGES += \
-    android.hardware.drm@1.0-impl \
-    android.hardware.drm@1.0-service \
-    android.hardware.drm@1.3-service.clearkey
+PRODUCT_PACKAGES += android.hardware.drm@1.3-service.clearkey
 
 # Fingerprint
 PRODUCT_PACKAGES += \
