@@ -345,6 +345,10 @@ PRODUCT_PACKAGES += \
     ethertypes \
     libebtc
 
+# Lights
+PRODUCT_PACKAGES += \
+    android.hardware.lights-service.qti
+
 # Media
 
 PRODUCT_PACKAGES += \
