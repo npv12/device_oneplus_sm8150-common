@@ -95,11 +95,8 @@ on charger && property:ro.boot.type=auto
     symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1
     write /config/usb_gadget/g1/UDC ${sys.usb.controller}
 
-on init && property:ro.build.type=userdebug
-    exec u:r:vendor-qti-testscripts:s0 -- /vendor/bin/sh /vendor/bin/init.qti.usb.debug.sh
-
-on init && property:ro.build.type=eng
-    exec u:r:vendor-qti-testscripts:s0 -- /vendor/bin/sh /vendor/bin/init.qti.usb.debug.sh
+on init
+   exec u:r:vendor-qti-testscripts:s0 -- /vendor/bin/sh /vendor/bin/init.qti.usb.debug.sh
 
 on boot
     write /sys/class/android_usb/android0/iSerial ${ro.serialno}
@@ -171,6 +168,10 @@ on boot
     write /config/usb_gadget/g2/strings/0x409/product ${vendor.usb.product_string}
     #setprop sys.usb.config ${persist.vendor.usb.config}
     setprop sys.usb.configfs 1
+    write /sys/bus/platform/drivers/qti_battery_charger/bind "soc:qcom,pmic_glink:qcom,battery_charger"
+    write /sys/bus/platform/drivers/ucsi_glink/bind "soc:qcom,pmic_glink:qcom,ucsi"
+    # hongwei.di, remove wlchgd service in SM8150R.
+    #start wlchgd
 
 on boot && property:vendor.usb.use_ffs_mtp=1
    mkdir /config/usb_gadget/g1/functions/ffs.mtp
@@ -182,10 +183,6 @@ on boot && property:vendor.usb.use_ffs_mtp=1
 
 #on property:persist.vendor.usb.config=*
 #    setprop persist.sys.usb.config ${persist.vendor.usb.config}
-
-#BSP add for 5G diag port
-on property:persist.vendor.sdx50m.online=*
-    setprop persist.sys.sdx50m.online ${persist.vendor.sdx50m.online}
 
 on boot && property:ro.boot.usbconfigfs=true
         setprop sys.usb.configfs 1
@@ -221,7 +218,7 @@ on property:sys.usb.config=mass_storage && property:sys.usb.configfs=1
     rm /config/usb_gadget/g1/configs/b.1/f9
     write /config/usb_gadget/g1/idVendor 0x05C6
     write /config/usb_gadget/g1/idProduct 0xF000
-    symlink /config/usb_gadget/g1/functions/mtp.gs0 /config/usb_gadget/g1/configs/b.1/f1
+    symlink /config/usb_gadget/g1/functions/ffs.mtp /config/usb_gadget/g1/configs/b.1/f1
     symlink /config/usb_gadget/g1/functions/mass_storage.0 /config/usb_gadget/g1/configs/b.1/f2
     write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/file "/vendor/etc/usb_drivers.iso"
     write /config/usb_gadget/g1/UDC ${sys.usb.controller}
@@ -243,7 +240,7 @@ on property:sys.usb.ffs.ready=1 && property:sys.usb.config=mass_storage,adb && p
     rm /config/usb_gadget/g1/configs/b.1/f9
     write /config/usb_gadget/g1/idVendor 0x05C6
     write /config/usb_gadget/g1/idProduct 0x9015
-    symlink /config/usb_gadget/g1/functions/mtp.gs0 /config/usb_gadget/g1/configs/b.1/f1
+    write /config/usb_gadget/g1/configs/b.1/strings/0x409/configuration "diag_adb"
     symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f2
     symlink /config/usb_gadget/g1/functions/mass_storage.0 /config/usb_gadget/g1/configs/b.1/f3
     write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/file "/vendor/etc/usb_drivers.iso"

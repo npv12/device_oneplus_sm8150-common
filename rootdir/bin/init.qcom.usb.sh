@@ -199,6 +199,7 @@ echo "boot_mode: $boot_mode" > /dev/kmsg
 case "$boot_mode" in
     "ftm_at" | "ftm_rf" | "ftm_wlan" | "ftm_mos")
     setprop sys.usb.config diag,adb
+    setprop persist.sys.usb.config diag,adb
     echo "AFTER boot_mode: diag,adb" > /dev/kmsg
 esac
 #endif
@@ -269,4 +270,3 @@ case "$boot_mode" in
     echo "AFTER boot_mode: diag,adb" > /dev/kmsg
 esac
 #endif
-
