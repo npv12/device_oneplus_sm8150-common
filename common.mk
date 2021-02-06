@@ -501,10 +501,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     textclassifier.bundle1
 
-# Thermal
-PRODUCT_PACKAGES += \
-    android.hardware.thermal@2.0-service.sm8150
-
 # Touch
 PRODUCT_PACKAGES += \
     vendor.lineage.touch@1.0-service.oneplus_msmnile
