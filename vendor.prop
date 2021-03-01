@@ -127,6 +127,9 @@ persist.rcs.supported=1
 # Keystore
 ro.hardware.keystore_desede=true
 
+# Netflix
+ro.netflix.bsp_rev=Q855-16947-1
+
 # NFC
 ro.camera.notify_nfc=1
 ro.vendor.nfc.notify_tp=1
