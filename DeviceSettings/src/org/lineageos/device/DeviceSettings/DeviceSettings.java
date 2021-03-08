@@ -47,7 +47,7 @@ import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.TwoStatePreference;
 
-import com.android.internal.util.xtended.FileUtils;
+import com.android.internal.util.derp.FileUtils;
 import org.lineageos.device.DeviceSettings.Constants;
 import org.lineageos.device.DeviceSettings.R;
 import org.lineageos.device.DeviceSettings.SuShell;
