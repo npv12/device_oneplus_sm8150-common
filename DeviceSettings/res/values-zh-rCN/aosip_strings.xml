@@ -32,6 +32,7 @@
     <string name="dc_mode_title">DC 调光</string>
     <string name="tile_hbm_mode">高亮度模式</string>
     <string name="tile_dc_mode">DC-调光</string>
+	
     <!-- Screen off Gestures : Input -->
     <string name="touchscreen_gesture_settings_title">触摸屏手势</string>
     <string name="touchscreen_gesture_settings_summary">为快捷操作采用各种触摸屏手势</string>
@@ -56,6 +57,7 @@
     <string name="touchscreen_gesture_letter_v_title">绘制字母\"V\"</string>
     <string name="touchscreen_gesture_letter_w_title">绘制字母\"W\"</string>
     <string name="touchscreen_gesture_letter_z_title">绘制字母 “Z”</string>
+	
     <!-- Screen off Gestures : Actions -->
     <string name="touchscreen_gesture_action_dialog_title">手势操作</string>
     <string name="touchscreen_gesture_action_do_nothing">什么都不做</string>
@@ -71,6 +73,7 @@
     <string name="touchscreen_gesture_action_volume_down">降低媒体音量</string>
     <string name="touchscreen_gesture_action_volume_up">提高媒体音量</string>
     <string name="touchscreen_gesture_action_ambient_display">环境显示</string>
+	
     <!-- Refresh rate -->
     <string name="refresh_title">屏幕刷新率</string>
     <string name="tile_refresh_rate">屏幕刷新率</string>
@@ -82,6 +85,7 @@
     <string name="fps_info_title">FPS 叠加层</string>
     <string name="fps_info_summary">显示帧率悬浮窗</string>
     <string name="panel_mode_info">禁用面板模式需要重新启动。</string>
+	
     <!-- Notification slider -->
     <string name="notification_slider_category_title">通知滑块</string>
     <string name="notification_slider_selection_dialog_title">操作</string>
@@ -94,17 +98,31 @@
     <string name="notification_slider_mode_vibrate">振动</string>
     <string name="notification_slider_mode_none">正常</string>
     <string name="buttons_dashboard_summary">三段式开关设置</string>
+	
     <!-- Vibration slider -->
     <string name="category_vibrator">振动</string>
     <string name="vib_strength_title_head">强度</string>
     <string name="vib_strength_summary_head">自定义振动强度</string>
     <string name="vibration_warning">设置强度过高可能会导致永久性硬件损伤</string>
-
+    
+	<!-- Camera-->
     <string name="camera_title">相机</string>
     <string name="always_on_camera_dialog_title">使用前置摄像头时打开对话框</string>
     <string name="always_on_camera_dialog_summary_on">打开前置摄像头前一定会询问</string>
     <string name="always_on_camera_dialog_summary_off">仅在屏幕关闭时询问</string>
 
+    <!-- Selinux Switch -->
+    <string name="selinux_explanation_summary">SELinux 是一种内核修改和用户空间工具。 修改其模式可能会导致不良影响。 使用风险自负!</string>
+    <string name="selinux_category">SELinux</string>
+    <string name="selinux_mode_title">SELinux 模式</string>
+    <string name="selinux_permissive_summary">宽容( Permissive )</string>
+    <string name="selinux_enforcing_summary">强制执行( Enforcing )</string>
+    <string name="selinux_persistence_title">在重新启动后持续有效</string>
+    <string name="selinux_persistence_summary">在每次启动时恢复上述设置的Sepolicy模式</string>
+    <string name="selinux_permissive_toast_title">Selinux 设置为宽容！</string>
+    <string name="selinux_enforcing_toast_title">Selinux 设置为强制执行!</string>
+    <string name="cannot_get_su">由于缺少超级用户的访问权限，导致操作失败</string>
+	
     <!-- Slider toasts -->
     <string name="slider_toast_normal">来电和通知时响铃</string>
     <string name="slider_toast_vibrate">来电和通知时震动</string>
