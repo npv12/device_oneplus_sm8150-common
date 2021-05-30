@@ -22,19 +22,20 @@ android_app {
     defaults: [
         "SettingsLibDefaults",
     ],
+    static_libs: [
+        "androidx-constraintlayout_constraintlayout",
+        "vendor.oneplus.hardware.camera-V1.0-java",
+	"androidx.core_core",
+        "androidx.preference_preference",
+        "org.lineageos.settings.resources",
+        "VendorSupport-preference",
+    ],
 
     srcs: ["src/**/*.java"],
     certificate: "platform",
     platform_apis: true,
     system_ext_specific: true,
     privileged: true,
-
-    static_libs: [
-        "androidx.core_core",
-        "androidx.preference_preference",
-        "org.lineageos.settings.resources",
-        "VendorSupport-preference",
-    ],
 
     resource_dirs: ["res"],
 

@@ -158,9 +158,8 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
     android.hardware.camera.provider@2.4-service_64 \
     libxml2 \
-    Snap \
-    vendor.oneplus.camera.CameraHIDL@1.0.vendor \
-    vendor.qti.hardware.camera.device@1.0.vendor
+    vendor.oneplus.hardware.camera@1.0.vendor:64 \
+    vendor.qti.hardware.camera.device@1.0.vendor:64
 
 # Common init scripts
 PRODUCT_PACKAGES += \
@@ -171,6 +170,7 @@ PRODUCT_PACKAGES += \
     init.oem.debug.rc \
     init.oem.rc \
     init.oem_ftm.rc \
+    init.opcamera.rc \
     init.qcom.class_core.sh \
     init.qcom.coex.sh \
     init.qcom.early_boot.sh \
@@ -327,6 +327,9 @@ PRODUCT_PACKAGES += \
     SecureElement \
     Tag \
     android.hardware.nfc@1.2-service
+
+# OnePlus apps
+$(call inherit-product, vendor/oneplus/apps/config.mk)
 
 # OMX
 PRODUCT_PACKAGES += \
