@@ -10,6 +10,7 @@ allow hal_nfc_default vendor_nfc_vendor_data_file:file create_file_perms;
 get_prop(hal_nfc_default, vendor_nfc_prop)
 
 add_hwservice(hal_nfc_default, hal_nxpnfc_hwservice)
+hwbinder_use(hal_nfc_default)
 
 # Allow access to the Secure Element HALs
 hal_client_domain(hal_nfc_default, hal_secure_element)
