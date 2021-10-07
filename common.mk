@@ -397,7 +397,8 @@ SRC_AUDIO_HAL_DIR := hardware/qcom-caf/sm8150/audio
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \
     hardware/oneplus \
-    hardware/qcom-caf/sm8150
+    hardware/qcom-caf/sm8150 \
+    hardware/qcom-caf/wlan
 
 # Telephony
 PRODUCT_PACKAGES += \
