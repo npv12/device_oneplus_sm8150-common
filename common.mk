@@ -386,9 +386,14 @@ PRODUCT_PACKAGES += \
     libsensorndkbridge
 
 # Soong namespaces
+SRC_MEDIA_HAL_DIR := hardware/qcom-caf/sm8150/media
+SRC_DISPLAY_HAL_DIR := hardware/qcom-caf/sm8150/display
+SRC_AUDIO_HAL_DIR := hardware/qcom-caf/sm8150/audio
+
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \
-    hardware/oneplus
+    hardware/oneplus \
+    hardware/qcom-caf/sm8150
 
 # Telephony
 PRODUCT_PACKAGES += \
