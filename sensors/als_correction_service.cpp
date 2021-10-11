@@ -40,7 +40,7 @@ void updateScreenBuffer() {
 
     struct timespec now;
     clock_gettime(CLOCK_MONOTONIC, &now);
-    android::IScreenCaptureListener *captureListener;
+    android::IScreenCaptureListener *captureListener = new android::IScreenCaptureListener();;
     android::gui::ScreenCaptureResults captureResults;
 
     if (now.tv_sec - lastScreenUpdate >= SCREENSHOT_INTERVAL) {
