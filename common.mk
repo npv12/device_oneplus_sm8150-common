@@ -416,6 +416,7 @@ PRODUCT_PACKAGES += \
 
 # tri-state key
 PRODUCT_PACKAGES += \
+    KeyHandler \
     tri-state-key_daemon.vendor
 
 # Update engine
