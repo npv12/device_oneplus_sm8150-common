@@ -360,6 +360,13 @@ PRODUCT_PACKAGES += \
     libstagefrighthw \
     libstagefright_softomx.vendor
 
+# OnePlus
+PRODUCT_PACKAGES += \
+    oneplus-fwk
+
+PRODUCT_BOOT_JARS += \
+    oneplus-fwk
+
 # Power
 PRODUCT_PACKAGES += \
     android.hardware.power@1.2.vendor \
