@@ -148,8 +148,8 @@ public class KeyHandler implements DeviceKeyHandler {
     }
 
     public KeyEvent handleKeyEvent(KeyEvent event) {
-        int scanCode = event.getScanCode();
-        String keyCode = Constants.sKeyMap.get(scanCode);
+        final int scanCode = event.getScanCode();
+        final String keyCode = Constants.sKeyMap.get(scanCode);
         int keyCodeValue = 0;
 
         try {
@@ -172,7 +172,20 @@ public class KeyHandler implements DeviceKeyHandler {
         if (mPrevKeyCode == Constants.KEY_VALUE_TOTAL_SILENCE)
             doHapticFeedback(sSupportedSliderHaptics.get(keyCodeValue));
         mNotificationManager.setZenMode(sSupportedSliderZenModes.get(keyCodeValue), null, TAG);
-        mPrevKeyCode = keyCodeValue;
+        if (Constants.getIsMuteMediaEnabled(mContext)) {
+            final int max = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+            if (keyCodeValue == Constants.KEY_VALUE_SILENT) {
+                final int curr = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                Constants.setLastMediaLevel(mContext, Math.round((float)curr * 100f / (float)max));
+                mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
+                        0, AudioManager.FLAG_SHOW_UI);
+            } else if (mPrevKeyCode == Constants.KEY_VALUE_SILENT) {
+                final int last = Constants.getLastMediaLevel(mContext);
+                mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
+                        Math.round((float)max * (float)last / 100f), AudioManager.FLAG_SHOW_UI);
+            }
+        }
+	mPrevKeyCode = keyCodeValue;
         int position = scanCode == 601 ? 2 : scanCode == 602 ? 1 : 0;
         sendUpdateBroadcast(position);
         return null;

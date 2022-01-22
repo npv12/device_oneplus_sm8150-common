@@ -83,4 +83,7 @@
 
     <!-- Refresh Rate tile -->
     <string name="refresh_rate_tile_title">Refresh Rate</string>
+
+    <string name="slider_mute_media_title">Mute media</string>
+    <string name="slider_mute_media_summary">Mute media when ringer is set to silent\nWill restore previous volume when unset</string>
 </resources>

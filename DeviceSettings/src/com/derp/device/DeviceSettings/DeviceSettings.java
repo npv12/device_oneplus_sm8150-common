@@ -23,6 +23,7 @@ import android.content.ComponentName;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.content.Intent;
+import android.content.ContentResolver;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -69,6 +70,7 @@ public class DeviceSettings extends PreferenceFragment
     private SwitchPreference mAlwaysCameraSwitch;
     private PreferenceCategory mCameraCategory;
     private VibratorStrengthPreference mVibratorStrength;
+    private SwitchPreference mMuteMediaSwitch;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -91,6 +93,10 @@ public class DeviceSettings extends PreferenceFragment
         mBottomKeyPref.setValueIndex(Constants.getPreferenceInt(getContext(), Constants.NOTIF_SLIDER_BOTTOM_KEY));
         mBottomKeyPref.setOnPreferenceChangeListener(this);
 
+        mMuteMediaSwitch = findPreference(Constants.NOTIF_SLIDER_MUTE_MEDIA_KEY);
+        mMuteMediaSwitch.setChecked(Constants.getIsMuteMediaEnabled(getContext()));
+        mMuteMediaSwitch.setOnPreferenceChangeListener(this);
+
         mCameraCategory = (PreferenceCategory) findPreference(KEY_CATEGORY_CAMERA);
         if (sHasPopupCamera) {
             mAlwaysCameraSwitch = (SwitchPreference) findPreference(KEY_ALWAYS_CAMERA_DIALOG);
@@ -110,11 +116,16 @@ public class DeviceSettings extends PreferenceFragment
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+	final ContentResolver resolver = getContext().getContentResolver();
         if (preference == mAlwaysCameraSwitch) {
             boolean enabled = (Boolean) newValue;
-            Settings.System.putInt(getContext().getContentResolver(),
+            Settings.System.putInt(resolver,
                         KEY_SETTINGS_PREFIX + KEY_ALWAYS_CAMERA_DIALOG,
                         enabled ? 1 : 0);
+        } else if (preference == mMuteMediaSwitch) {
+            Boolean enabled = (Boolean) newValue;
+            Settings.System.putInt(resolver,
+                    Constants.NOTIF_SLIDER_MUTE_MEDIA_KEY, enabled ? 1 : 0);
         } else {
             Constants.setPreferenceInt(getContext(), preference.getKey(), Integer.parseInt((String) newValue));
         }
