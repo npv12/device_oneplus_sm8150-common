@@ -151,6 +151,9 @@ PRODUCT_PACKAGES += \
     vendor.qti.hardware.btconfigstore@1.0.vendor:64 \
     vendor.qti.hardware.btconfigstore@2.0.vendor:64
 
+# Blur
+TARGET_USES_BLUR := true
+
 # Camera
 PRODUCT_PACKAGES += \
     android.frameworks.displayservice@1.0 \
@@ -351,6 +354,9 @@ PRODUCT_PACKAGES += \
     libqti_vndfwk_detect \
     libqti_vndfwk_detect.vendor \
     libvndfwk_detect_jni.qti.vendor
+
+# Quick Tap
+TARGET_SUPPORTS_QUICK_TAP := true
 
 # RIL
 PRODUCT_PACKAGES += \
