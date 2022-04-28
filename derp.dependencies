@@ -1,0 +1,16 @@
+[
+  {
+    "repository"  : "hardware_oneplus",
+    "target_path" : "hardware/oneplus"
+  },
+  {
+    "repository"  : "vendor_oneplus",
+    "target_path" : "vendor/oneplus"
+  },
+  {
+    "repository"  : "vendor_oneplus_apps",
+    "target_path" : "vendor/oneplus/apps",
+    "branch"      : "11",
+    "remote"      : "derp-gitlab"
+  }
+]
