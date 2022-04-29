@@ -31,4 +31,10 @@
 
     <!-- FPSInfoService FPS node file path -->
     <string name="config_fpsInfoSysNode" translatable="false">/sys/class/drm/sde-crtc-0/measured_fps</string>
+
+    <!-- Vibrator pattern for camera gesture launch. -->
+    <integer-array translatable="false" name="config_cameraLaunchGestureVibePattern">
+        <item>30</item>
+        <item>80</item>
+    </integer-array>
 </resources>

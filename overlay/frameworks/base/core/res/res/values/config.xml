@@ -355,8 +355,8 @@
 
     <integer-array name="config_defaultNotificationVibePattern">
         <item>0</item>
-        <item>120</item>
-        <item>200</item>
+        <item>80</item>
+        <item>80</item>
         <item>40</item>
     </integer-array>
 
